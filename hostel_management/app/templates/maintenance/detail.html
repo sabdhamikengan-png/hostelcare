@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Update #{{ complaint.id }} · HostelCare{% endblock %}
+{% block topbar %}Update complaint #{{ complaint.id }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Maintenance</div><h1 class="page-title">Update complaint #{{ complaint.id }}</h1><p class="page-subtitle">Record progress and resolution details.</p></div><a class="btn btn-outline-secondary" href="{{ url_for('maintenance.dashboard') }}"><i class="bi bi-arrow-left me-1"></i> Back</a></div>
+<div class="detail-grid">
+<div class="panel detail-card"><h2 class="detail-title">{{ complaint.title }}</h2><p class="detail-description">{{ complaint.description }}</p><div class="mt-4 pt-4 border-top"><div class="meta-item"><label>Student</label><strong>{{ complaint.student.name }}</strong><div class="subtext">{{ complaint.student.email }}</div></div></div></div>
+<div class="panel form-panel"><div class="eyebrow">Status update</div><form method="POST"><div class="field"><label class="form-label">Status</label><select name="status" class="form-select"><option {% if complaint.status=="Assigned" %}selected{% endif %}>Assigned</option><option {% if complaint.status=="In Progress" %}selected{% endif %}>In Progress</option><option {% if complaint.status=="Resolved" %}selected{% endif %}>Resolved</option></select></div><div class="field"><label class="form-label">Resolution notes</label><textarea name="resolution_notes" class="form-control" placeholder="Explain what was fixed or what remains to be done.">{{ complaint.resolution_notes or "" }}</textarea></div><button class="btn btn-success w-100"><i class="bi bi-check2-circle me-1"></i> Save update</button></form></div>
+</div>
+{% endblock %}

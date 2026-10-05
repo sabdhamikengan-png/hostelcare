@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard · HostelCare{% endblock %}
+{% block topbar %}Admin workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Administration</div><h1 class="page-title">Complaint overview</h1><p class="page-subtitle">Monitor, assign and manage hostel maintenance requests.</p></div></div>
+<div class="stat-grid six">
+{% for key,label,icon,cls in [('total','Total','bi-clipboard-data','icon-blue'),('pending','Pending','bi-hourglass-split','icon-amber'),('assigned','Assigned','bi-person-check','icon-blue'),('progress','In progress','bi-arrow-repeat','icon-blue'),('resolved','Resolved','bi-check2-circle','icon-green'),('closed','Closed','bi-lock-fill','icon-slate')] %}
+<div class="stat-card"><div class="stat-icon {{ cls }}"><i class="bi {{ icon }}"></i></div><div class="stat-label">{{ label }}</div><div class="stat-value">{{ stats[key] }}</div></div>
+{% endfor %}
+</div>
+<div class="panel"><div class="panel-head"><div><h2 class="panel-title">Recent complaints</h2><span class="panel-muted">Manage incoming requests</span></div><span class="panel-muted">{{ complaints|length }} shown</span></div>
+<div class="table-wrap"><table class="modern-table"><thead><tr><th>ID</th><th>Student</th><th>Complaint</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody>
+{% for c in complaints %}<tr><td><span class="id-text">#{{ c.id }}</span></td><td><strong>{{ c.student.name }}</strong><div class="subtext">{{ c.student.email }}</div></td><td><div class="title-cell">{{ c.title }}</div></td><td><span class="priority priority-{{ c.priority|lower }}">{{ c.priority }}</span></td><td><span class="status status-{% if c.status == 'In Progress' %}progress{% else %}{{ c.status|lower|replace(' ','-') }}{% endif %}">{{ c.status }}</span></td><td><a class="btn btn-sm btn-primary" href="{{ url_for('admin.complaint_detail', complaint_id=c.id) }}">Manage</a></td></tr>
+{% else %}<tr><td colspan="6"><div class="empty">No complaints to manage.</div></td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

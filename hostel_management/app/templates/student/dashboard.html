@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · HostelCare{% endblock %}
+{% block topbar %}Student workspace{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><div class="eyebrow">Overview</div><h1 class="page-title">Good to see you, {{ current_user.name.split()[0] }} 👋</h1><p class="page-subtitle">Track your hostel complaints and stay updated on their progress.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('student.create_complaint') }}"><i class="bi bi-plus-lg me-1"></i> New complaint</a>
+</div>
+<div class="stat-grid">
+{% for key,label,icon,cls in [('total','Total complaints','bi-clipboard2-check','icon-blue'),('pending','Pending','bi-hourglass-split','icon-amber'),('progress','In progress','bi-arrow-repeat','icon-blue'),('resolved','Resolved','bi-check2-circle','icon-green'),('closed','Closed','bi-lock-fill','icon-slate')] %}
+<div class="stat-card"><div class="stat-icon {{ cls }}"><i class="bi {{ icon }}"></i></div><div class="stat-label">{{ label }}</div><div class="stat-value">{{ counts[key] }}</div></div>
+{% endfor %}
+</div>
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel h-100">
+      <div class="panel-head"><div><h2 class="panel-title">Recent updates</h2><span class="panel-muted">Notifications from your complaints</span></div><i class="bi bi-bell text-secondary"></i></div>
+      <div class="notification-list">
+      {% for n in notifications %}
+        <div class="notification"><span class="notification-dot"></span><a href="{{ url_for('student.read_notification', notification_id=n.id) }}">{{ n.message }}</a></div>
+      {% else %}<div class="empty"><i class="bi bi-bell-slash fs-4 d-block mb-2"></i>No new notifications right now.</div>{% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="panel h-100">
+      <div class="panel-head"><div><h2 class="panel-title">Quick actions</h2><span class="panel-muted">Common tasks</span></div></div>
+      <div class="action-grid">
+        <a class="quick-action" href="{{ url_for('student.create_complaint') }}"><span class="quick-icon"><i class="bi bi-pencil-square"></i></span><span><strong>Report an issue</strong><span>Create a new complaint</span></span></a>
+        <a class="quick-action" href="{{ url_for('student.complaints') }}"><span class="quick-icon"><i class="bi bi-list-check"></i></span><span><strong>View complaints</strong><span>Track all your reports</span></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}My Complaints · HostelCare{% endblock %}
+{% block topbar %}My complaints{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><div class="eyebrow">Complaints</div><h1 class="page-title">My complaints</h1><p class="page-subtitle">A complete history of the issues you have reported.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('student.create_complaint') }}"><i class="bi bi-plus-lg me-1"></i> New complaint</a>
+</div>
+<div class="panel">
+<div class="table-wrap"><table class="modern-table"><thead><tr><th>ID</th><th>Complaint</th><th>Category</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for c in complaints %}
+<tr><td><span class="id-text">#{{ c.id }}</span></td><td><div class="title-cell">{{ c.title }}</div></td><td>{{ c.category }}</td><td><span class="priority priority-{{ c.priority|lower }}">{{ c.priority }}</span></td><td><span class="status status-{% if c.status == 'In Progress' %}progress{% else %}{{ c.status|lower|replace(' ','-') }}{% endif %}">{{ c.status }}</span></td><td><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('student.complaint_detail', complaint_id=c.id) }}">View <i class="bi bi-arrow-right ms-1"></i></a></td></tr>
+{% else %}<tr><td colspan="6"><div class="empty">No complaints yet. Create your first report to get started.</div></td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

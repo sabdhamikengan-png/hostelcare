@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}New Complaint · HostelCare{% endblock %}
+{% block topbar %}New complaint{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Support request</div><h1 class="page-title">Report a problem</h1><p class="page-subtitle">Give us enough detail so the right team can resolve it quickly.</p></div></div>
+<div class="panel form-panel">
+<form method="POST" enctype="multipart/form-data">
+<div class="field"><label class="form-label">Complaint title</label><input class="form-control" name="title" placeholder="e.g. Water leakage in bathroom" required></div>
+<div class="field"><label class="form-label">Describe the problem</label><textarea class="form-control" name="description" placeholder="Tell us what happened, where it happened, and anything useful to know." required></textarea></div>
+<div class="form-row"><div class="field"><label class="form-label">Category</label><select class="form-select" name="category" required><option value="">Select category</option><option>Electrical</option><option>Plumbing</option><option>Cleaning</option><option>Furniture</option><option>Internet</option><option>Water</option><option>Other</option></select></div>
+<div class="field"><label class="form-label">Priority</label><select class="form-select" name="priority"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></div></div>
+<div class="form-row"><div class="field"><label class="form-label">Hostel / Block</label><input class="form-control" name="hostel" placeholder="e.g. Block A"></div><div class="field"><label class="form-label">Room number</label><input class="form-control" name="room_number" placeholder="e.g. 204"></div></div>
+<div class="field"><label class="form-label">Photo (optional)</label><input class="form-control" name="image" type="file" accept=".jpg,.jpeg,.png,.webp"></div>
+<div class="d-flex justify-content-end gap-2 pt-2"><a class="btn btn-outline-secondary" href="{{ url_for('student.complaints') }}">Cancel</a><button class="btn btn-primary"><i class="bi bi-send me-1"></i> Submit complaint</button></div>
+</form></div>
+{% endblock %}

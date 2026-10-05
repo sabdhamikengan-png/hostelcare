@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Complaint #{{ complaint.id }} · HostelCare{% endblock %}
+{% block topbar %}Complaint #{{ complaint.id }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Complaint details</div><h1 class="page-title">#{{ complaint.id }} · {{ complaint.title }}</h1><p class="page-subtitle">Follow the progress of your support request.</p></div><a class="btn btn-outline-secondary" href="{{ url_for('student.complaints') }}"><i class="bi bi-arrow-left me-1"></i> Back</a></div>
+<div class="detail-grid">
+<div class="panel detail-card"><h2 class="detail-title">{{ complaint.title }}</h2><p class="detail-description">{{ complaint.description }}</p>
+{% if complaint.image %}<img class="image-preview" src="{{ url_for('static', filename='uploads/' + complaint.image) }}" alt="Complaint attachment">{% endif %}
+{% if complaint.resolution_notes %}<div class="mt-4 pt-4 border-top"><div class="eyebrow">Resolution</div><p class="detail-description mb-0">{{ complaint.resolution_notes }}</p></div>{% endif %}
+{% if complaint.status == "Resolved" and not complaint.feedback %}<div class="mt-4 pt-4 border-top"><div class="eyebrow">Your feedback</div><h3 class="h6 fw-bold">How did we do?</h3><form method="POST" action="{{ url_for('student.feedback', complaint_id=complaint.id) }}"><div class="form-row"><select name="rating" class="form-select" required>{% for i in range(1,6) %}<option value="{{ i }}">{{ i }} / 5</option>{% endfor %}</select><input name="comment" class="form-control" placeholder="Optional comment"></div><button class="btn btn-success mt-3">Submit feedback</button></form></div>{% endif %}
+</div>
+<div class="panel detail-card"><div class="eyebrow">Summary</div><div class="meta-list"><div class="meta-item"><label>Status</label><span class="status status-{% if complaint.status == 'In Progress' %}progress{% else %}{{ complaint.status|lower|replace(' ','-') }}{% endif %}">{{ complaint.status }}</span></div><div class="meta-item"><label>Category</label><strong>{{ complaint.category }}</strong></div><div class="meta-item"><label>Priority</label><span class="priority priority-{{ complaint.priority|lower }}">{{ complaint.priority }}</span></div></div></div>
+</div>
+{% endblock %}

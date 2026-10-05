@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Maintenance · HostelCare{% endblock %}
+{% block topbar %}Maintenance workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Maintenance</div><h1 class="page-title">My assignments</h1><p class="page-subtitle">Resolve the complaints assigned to you.</p></div></div>
+<div class="panel"><div class="panel-head"><div><h2 class="panel-title">Assigned complaints</h2><span class="panel-muted">Keep statuses updated as you work</span></div></div>
+<div class="table-wrap"><table class="modern-table"><thead><tr><th>Complaint</th><th>Student</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for a in assignments %}<tr><td><span class="id-text">#{{ a.complaint.id }}</span><div class="title-cell mt-1">{{ a.complaint.title }}</div></td><td><strong>{{ a.complaint.student.name }}</strong><div class="subtext">{{ a.complaint.student.email }}</div></td><td><span class="status status-{% if a.complaint.status == 'In Progress' %}progress{% else %}{{ a.complaint.status|lower|replace(' ','-') }}{% endif %}">{{ a.complaint.status }}</span></td><td><a class="btn btn-sm btn-primary" href="{{ url_for('maintenance.complaint_detail', complaint_id=a.complaint.id) }}">Update</a></td></tr>
+{% else %}<tr><td colspan="4"><div class="empty"><i class="bi bi-check2-circle fs-4 d-block mb-2"></i>No assignments right now.</div></td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

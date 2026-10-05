@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Manage #{{ complaint.id }} · HostelCare{% endblock %}
+{% block topbar %}Manage complaint #{{ complaint.id }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Administration</div><h1 class="page-title">Manage complaint #{{ complaint.id }}</h1><p class="page-subtitle">Review the issue and assign it to maintenance staff.</p></div><a class="btn btn-outline-secondary" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-arrow-left me-1"></i> Dashboard</a></div>
+<div class="detail-grid">
+<div class="panel detail-card"><div class="d-flex justify-content-between gap-3 align-items-start"><div><h2 class="detail-title">{{ complaint.title }}</h2><p class="detail-description">{{ complaint.description }}</p></div><span class="priority priority-{{ complaint.priority|lower }}">{{ complaint.priority }}</span></div><hr class="my-4 border-light">
+<div class="meta-list"><div class="meta-item"><label>Student</label><strong>{{ complaint.student.name }}</strong><div class="subtext">{{ complaint.student.email }}</div></div><div class="meta-item"><label>Current status</label><span class="status status-{% if complaint.status == 'In Progress' %}progress{% else %}{{ complaint.status|lower|replace(' ','-') }}{% endif %}">{{ complaint.status }}</span></div></div>
+</div>
+<div class="panel form-panel"><div class="eyebrow">Assignment</div><h2 class="h5 fw-bold mb-1">Assign maintenance staff</h2><p class="panel-muted mb-4">Choose the person responsible for this request.</p><form method="POST"><div class="field"><label class="form-label">Maintenance staff</label><select name="staff_id" class="form-select" required><option value="">Select staff</option>{% for s in staff %}<option value="{{ s.id }}">{{ s.name }} — {{ s.email }}</option>{% endfor %}</select></div><button class="btn btn-primary w-100"><i class="bi bi-person-check me-1"></i> Assign complaint</button></form></div>
+</div>
+{% endblock %}

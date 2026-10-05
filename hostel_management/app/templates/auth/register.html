@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Register · HostelCare{% endblock %}
+{% block auth_content %}
+<div class="auth-card">
+  <div class="auth-title">Create your account</div><div class="auth-subtitle">Register as a student to report and track hostel issues.</div>
+  <form method="POST">
+    <div class="field"><label class="form-label">Full name</label><input class="form-control" name="name" placeholder="Your full name" required></div>
+    <div class="field"><label class="form-label">Email address</label><input class="form-control" name="email" type="email" placeholder="you@example.com" required></div>
+    <div class="field"><label class="form-label">Password</label><input class="form-control" name="password" type="password" placeholder="At least 6 characters" minlength="6" required></div>
+    <div class="form-row"><div class="field"><label class="form-label">Hostel / Block</label><input class="form-control" name="hostel" placeholder="Block A"></div><div class="field"><label class="form-label">Room number</label><input class="form-control" name="room_number" placeholder="204"></div></div>
+    <button class="btn btn-primary w-100 py-2">Create account</button>
+  </form>
+  <p class="text-center mt-4 mb-0 panel-muted">Already registered? <a class="auth-link" href="{{ url_for('auth.login') }}">Sign in</a></p>
+</div>
+{% endblock %}
